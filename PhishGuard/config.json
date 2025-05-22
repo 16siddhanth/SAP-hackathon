@@ -1,0 +1,29 @@
+{
+    "server": {
+        "host": "127.0.0.1",
+        "port": 5000,
+        "api_endpoint": "/predict"
+    },
+    "extension": {
+        "caching": true,
+        "cache_duration_minutes": 60,
+        "fallback_enabled": true
+    },
+    "model": {
+        "path": "./Phishing_Detection_Using_RandomForest_Algorithms-main/Phishing_Detection_Using_RandomForest_Algorithms-main/trained_models/randomForest.pkl",
+        "confidence_threshold": 0.7
+    },
+    "whitelist": {
+        "auto_update": false,
+        "trusted_domains": [
+            "paypal.com",
+            "bankxyz.com",
+            "google.com",
+            "microsoft.com",
+            "github.com",
+            "amazon.com",
+            "facebook.com",
+            "twitter.com"
+        ]
+    }
+}

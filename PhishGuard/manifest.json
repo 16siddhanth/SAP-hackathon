@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "PhishGuard ML Detector",
+  "version": "1.0",
+  "description": "Detects phishing URLs using RandomForest ML model and shows warnings on hover.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
