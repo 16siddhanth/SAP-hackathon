@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard Enhanced</title>
+    <style>
+        body {
+            width: 400px;
+            min-height: 500px;
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .status-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .status-value {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .status-value.online {
+            color: #4ade80;
+        }
+        
+        .status-value.offline {
+            color: #f87171;
+        }
+        
+        .action-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn .icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .upload-area.dragover {
+            border-color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+        }
+        
+        .upload-text {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .upload-hint {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .results {
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        
+        .result-item.real {
+            border-left: 4px solid #4ade80;
+        }
+        
+        .result-item.fake {
+            border-left: 4px solid #f87171;
+        }
+        
+        .result-item.error {
+            border-left: 4px solid #facc15;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .result-prediction {
+            font-weight: 600;
+        }
+        
+        .result-confidence {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .media-count {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ PhishGuard Enhanced</h1>
+        <p>AI-Powered Security Detection</p>
+    </div>
+    
+    <div class="status-card">
+        <div class="status-item">
+            <span class="status-label">🌐 Phishing Detection</span>
+            <span class="status-value" id="phishingStatus">Checking...</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">🎵 Deepfake Detection</span>
+            <span class="status-value" id="deepfakeStatus">Checking...</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">📊 Current Page</span>
+            <span class="status-value" id="pageStatus">Safe</span>
+        </div>
+    </div>
+    
+    <!-- URL Analysis Section -->
+    <div class="action-section">
+        <div class="section-title">
+            <span class="icon">🔍</span>
+            Current Page Analysis
+        </div>
+        <button class="btn" id="analyzeCurrentPage">
+            <span class="icon">🔎</span>
+            Scan This Page
+        </button>
+    </div>
+    
+    <!-- Media Detection Section -->
+    <div class="action-section">
+        <div class="section-title">
+            <span class="icon">🎵</span>
+            Media Analysis
+        </div>
+        <div class="media-count" id="mediaCount">
+            Scanning for media files...
+        </div>
+        <button class="btn" id="scanPageMedia">
+            <span class="icon">🔍</span>
+            Scan Page Media
+        </button>
+    </div>
+    
+    <!-- File Upload Section -->
+    <div class="action-section">
+        <div class="section-title">
+            <span class="icon">📁</span>
+            Upload File Analysis
+        </div>
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-text">Drop audio/video file here</div>
+            <div class="upload-hint">or click to browse</div>
+        </div>
+        <input type="file" id="fileInput" accept=".mp3,.wav,.mp4,.avi,.mov,.flac,.ogg,.m4a,.webm" style="display: none;">
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results" id="results"></div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

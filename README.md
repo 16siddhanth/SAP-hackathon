@@ -46,10 +46,10 @@ python app.py
 
 You should see output similar to:
 ```
-Starting PhishGuard API server on http://127.0.0.1:5000
+Starting PhishGuard API server on http://127.0.0.1:5050
  * Serving Flask app 'app'
  * Debug mode: on
- * Running on http://127.0.0.1:5000
+ * Running on http://127.0.0.1:5050
 ```
 
 Keep this window open while using the extension.
@@ -94,7 +94,7 @@ Keep this window open while using the extension.
 ## Troubleshooting
 
 - **Extension not loading**: Make sure there are no files or folders starting with `_` in the extension directory
-- **API connection errors**: Ensure the Flask server is running at http://127.0.0.1:5000
+- **API connection errors**: Ensure the Flask server is running at http://127.0.0.1:5050
 - **Model not found**: Check that the path to `randomForest.pkl` is correct in `app.py`
 - **Dependencies missing**: Run `pip install -r requirements.txt` to install all required packages
 
