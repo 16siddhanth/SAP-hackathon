@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 import joblib
 
 # Importing the dataset
-dataset = pd.read_csv("datasets/phishyFeatures.csv")
+dataset = pd.read_csv("../datasets/phishyFeatures.csv")
 dataset = dataset.drop('id', axis=1) # removing unwanted column
 
 x = dataset.iloc[:, :-1].values
@@ -77,7 +77,7 @@ plt.xlabel('Relative Importance')
 plt.show()
 '''
 # Pickle file joblib
-joblib.dump(classifier, 'trained_models/randomForest_final.pkl', protocol=4)
+joblib.dump(classifier, '../trained_models/randomForest.pkl', protocol=5)
 
 '''
 RANDOM FOREST MODEL SPECS:

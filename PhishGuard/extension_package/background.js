@@ -3,7 +3,7 @@ console.log("PhishGuard Enhanced background script loaded");
 
 // Default config
 let config = {
-  serverUrl: 'http://localhost:5050',
+  serverUrl: 'http://localhost:5000',
   deepfakeDetectionEnabled: true,
   phishingDetectionEnabled: true,
   mediaHighlightingEnabled: true
@@ -130,24 +130,13 @@ async function checkUrl(url) {
 // Check server status periodically
 function checkServerStatus() {
   fetch(`${config.serverUrl}/health`, { method: 'GET' })
-    .then(response => response.text())
-    .then(text => {
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (jsonError) {
-        console.error('Invalid JSON from server:', jsonError);
-        chrome.storage.local.set({
-          serverStatus: {
-            serverAvailable: false,
-            phishingDetection: false,
-            deepfakeDetection: false,
-            lastChecked: Date.now(),
-            error: 'Invalid JSON from server'
-          }
-        });
-        return;
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      return response.json(); // Parse as JSON directly
+    })
+    .then(data => {
       const status = {
         serverAvailable: true,
         phishingDetection: data.phishing_model || false,
