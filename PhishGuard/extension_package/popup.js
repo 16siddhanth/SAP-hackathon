@@ -1,7 +1,7 @@
 // popup.js - Enhanced popup functionality
 class PhishGuardPopup {
     constructor() {
-        this.serverUrl = 'http://localhost:5050';
+        this.serverUrl = 'http://localhost:5000';
         this.currentTab = null;
         this.mediaElements = [];
         this.init();
@@ -212,7 +212,7 @@ class PhishGuardPopup {
                     title: 'File Analysis',
                     prediction: result.prediction,
                     confidence: result.confidence,
-                    details: `File: ${data.filename}${result.sample_rate ? ` (${result.sample_rate}Hz)` : ''}`
+                    details: `File: ${result.filename}${result.sample_rate ? ` (${result.sample_rate}Hz)` : ''}`
                 });
             } else {
                 this.showError('Analysis failed: ' + data.error);

@@ -52,9 +52,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           // Create notification
           chrome.notifications.create({
             type: 'basic',
-            iconUrl: isFake ? 'icons/icon_warning.png' : 'icons/icon_safe.png',
+            iconUrl: isFake ? 'icons/icon48.png' : 'icons/icon48.png',
             title: isFake ? 'Potential Deepfake Detected!' : 'Media Appears Authentic',
-            message: `The ${result.prediction} (${(result.confidence * 100).toFixed(1)}% confidence)`
+            message: `${result.prediction} (${(result.confidence * 100).toFixed(1)}% confidence)`
           });
           
           // If it's fake, highlight it in the page
