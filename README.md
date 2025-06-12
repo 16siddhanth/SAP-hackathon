@@ -113,7 +113,3 @@ To modify the extension:
 - `content-script.js`: Handles the tooltip UI and user interaction
 - `app.py`: Flask server that provides the ML-based detection API
 - `feature_extractor_helper.py`: Extracts features from URLs for analysis
-
-## License
-
-Open source under MIT license. See LICENSE file for details.
